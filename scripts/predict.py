@@ -94,7 +94,7 @@ def set_config(
     cfg.data.common.reduce_msa_clusters_by_max_templates = t
     cfg.data.eval.subsample_templates = t
 
-    p = data.get_model_haiku_params(model_name=name, data_dir=".")
+    p = data.get_model_haiku_params(model_name=name, data_dir="/data/run01/scw6ciu/software/alphafold/data")
 
     logging.debug("Prediction parameters:")
     logging.debug("\tModel ID: {}".format(model_id))
@@ -382,8 +382,17 @@ def to_pdb(
 
     with open(outname, "w") as outfile:
         outfile.write(protein.to_pdb(pred))
+        
+    # Extract directory and filename components
+    dir_name, file_name = os.path.split(outname)
 
-    with open(f"b_{ outname }", "w") as outfile:
+    # Modify the filename
+    modified_file_name = f"b_{file_name}"
+
+    # Construct the new path with the modified filename in the same directory
+    modified_outname = os.path.join(dir_name, modified_file_name)
+
+    with open(modified_outname, "w") as outfile:
         for line in open(outname, "r").readlines():
             if line[0:6] == "ATOM  ":
                 seq_id = int(line[22:26].strip()) - 1
@@ -394,4 +403,6 @@ def to_pdb(
                     )
                 )
 
-    os.rename(f"b_{ outname }", outname)
+    # # Replace the original file with the modified one
+    # os.rename(modified_outname, outname)
+

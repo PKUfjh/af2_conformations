@@ -1,5 +1,32 @@
 29 August 2023 - The colab notebooks in this repo are currently experiencing problems. I apologize and am looking for a fix. Thank you for your patience!
 
+# Installation
+```
+conda create -n af2 python=3.11
+conda activate af2
+pip install -U "jax[cuda12]"
+export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:
+git clone https://github.com/google-deepmind/alphafold.git
+cd alphafold
+pip install .
+```
+
+# test usage of GPU
+```
+python test_gpu.py
+```
+
+# MSA generation
+```
+conda activate ufconf
+python extract_msa_fastas.py -t configs/1ake_from_fasta.json -i input_fastas/ -o ./ufconf_out
+```
+
+# prediction
+```
+python af2_predict.py
+```
+
 # Prediction of alternative conformations using AlphaFold 2
 
 This repository accompanies the manuscript ["Sampling alternative conformational states of transporters and receptors with AlphaFold2"](https://elifesciences.org/articles/75751) by Diego del Alamo, Davide Sala, Hassane S. Mchaourab, and Jens Meiler. The code used to generate these models can be found in `scripts/` and was derived from the closely related repository [ColabFold](https://github.com/sokrypton/ColabFold/). This repository also includes the scripts used to plot the data, which can be found in `figures/`, as well as scripts to analyze data `analyses_scripts`. Finally, a Google Colab notebook is available for use in `notebooks/`.
