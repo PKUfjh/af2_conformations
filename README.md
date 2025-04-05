@@ -20,6 +20,9 @@ python test_gpu.py
 ```
 conda activate ufconf
 python extract_msa_fastas.py -t configs/1ake_from_fasta.json -i input_fastas/ -o ./ufconf_out
+#or
+colabfold_batch input_fastas/ 1ake_out/ --msa-only
+# delete the first line in the generated .a3m file
 ```
 
 # prediction
